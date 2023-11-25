@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autenticación con Token</title>
+</head>
+<body>
+  <h1>Autenticación con Token</h1>
+  <form id="loginForm">
+    <label for="username">Usuario:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="button" onclick="login()">Iniciar sesión</button>
+  </form>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Código de verificación enviado. Por favor, verifica tu correo.');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error al iniciar sesión. Verifica las credenciales.');
+      });
+    }
+  </script>
+</body>
+</html>
